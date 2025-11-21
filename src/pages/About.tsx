@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { TypingAnimation } from '../components/magicui/typing-animation';
 import { GridPattern } from '../components/magicui/grid-pattern';
@@ -100,13 +101,14 @@ export default function About() {
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 px-4 md:px-0">
-              <motion.a
-                href="/projects"
-                whileHover={{ scale: 1.05 }}
-                className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 text-center"
-              >
-                See My Work
-              </motion.a>
+              <Link to="/projects">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300 text-center"
+                >
+                  See My Work
+                </motion.div>
+              </Link>
               <motion.a
                 href="/resume.pdf"
                 download="/Gavin_W_X_Zhang_Resume.pdf"

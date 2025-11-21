@@ -25,6 +25,16 @@ export default {
           900: '#0c4a6e',
         },
       },
+      animation: {
+        'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
+      },
+      keyframes: {
+        'border-beam': {
+          '100%': {
+            'offset-distance': '100%',
+          },
+        },
+      },
     },
   },
   darkMode: 'class',

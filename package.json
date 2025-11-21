@@ -8,22 +8,20 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "echo \"No tests configured\" && exit 0"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@formspree/react": "^3.0.0",
     "@heroicons/react": "^2.2.0",
-    "@mdx-js/react": "^3.1.1",
-    "@mdx-js/rollup": "^3.1.1",
-    "@types/mdx": "^2.0.13",
     "@types/react-helmet": "^6.1.11",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
-    "gray-matter": "^4.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^7.9.4"
+    "react-router-dom": "^7.9.4",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -44,7 +42,6 @@
     "husky": "^9.1.7",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
-    "puppeteer": "^24.26.1",
     "tailwindcss": "^3.4.16",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",

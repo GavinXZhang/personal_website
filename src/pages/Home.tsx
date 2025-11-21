@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '../data/projects';
+import SEO from '../components/SEO';
+import { AnimatedGridPattern } from '../components/magicui/animated-grid-pattern';
+import { BlurFade } from '../components/magicui/blur-fade';
+import { BorderBeam } from '../components/magicui/border-beam';
+import { BoxReveal } from '../components/magicui/box-reveal';
 
 export default function Home() {
   const highlightedProjects = projects.slice(0, 2);
@@ -12,14 +17,29 @@ export default function Home() {
   };
 
   return (
-     <div 
-       className="min-h-screen w-full relative overflow-hidden"
-     >
+    <>
+      <SEO
+        title="Home - Gavin Zhang"
+        description="Software Engineer specializing in web and backend development. Explore my portfolio of projects showcasing automation, healthcare tech, and more."
+        keywords="software engineer, web development, backend development, Python, React, TypeScript, portfolio, automation, healthcare technology"
+      />
+      <div
+        className="min-h-screen w-full relative overflow-hidden"
+      >
       
       {/* --- REMOVED: Doodled Arrow and Resume Callout --- */}
       
       {/* --- HERO SECTION --- */}
       <section className="relative z-10 pt-20 pb-32">
+        {/* MagicUI Animated Grid Background */}
+        <AnimatedGridPattern
+          numSquares={30}
+          maxOpacity={0.05}
+          duration={3}
+          repeatDelay={1}
+          className="absolute inset-0 -z-10 [mask-image:radial-gradient(500px_circle_at_center,white,transparent)] fill-blue-600/5 stroke-blue-600/10"
+        />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -35,17 +55,22 @@ export default function Home() {
             <img
               src="/images/Profile.JPG"
               alt="Gavin Zhang"
+              loading="lazy"
               className="w-full h-full object-cover"
             />
           </motion.div>
           <div className="flex flex-col items-center md:items-start md:max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text">
-              Hi, I'm Gavin!
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-0 leading-relaxed">
-              A passionate Software Engineer specializing in building exceptional digital experiences
-              with modern technologies.
-            </p>
+            <BlurFade delay={0.25} inView>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text">
+                Hi, I'm Gavin!
+              </h1>
+            </BlurFade>
+            <BlurFade delay={0.5} inView>
+              <p className="text-xl md:text-2xl text-gray-700 mb-0 leading-relaxed">
+                A passionate Software Engineer specializing in building exceptional digital experiences
+                with modern technologies.
+              </p>
+            </BlurFade>
           </div>
         </motion.div>
       </section>
@@ -65,11 +90,12 @@ export default function Home() {
                   <img
                     src={project.image}
                     alt={project.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
-                      target.src = project.demo; 
+                      target.src = project.demo;
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
@@ -94,6 +120,14 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
+
+                  {/* MagicUI BorderBeam Effect */}
+                  <BorderBeam
+                    size={150}
+                    duration={8}
+                    colorFrom="#3B82F6"
+                    colorTo="#60A5FA"
+                  />
                 </div>
               </Link>
             ))}
@@ -114,50 +148,56 @@ export default function Home() {
             className="p-8 bg-white rounded-xl shadow-md transition-all duration-300 hover:border-blue-500 border-2 border-transparent"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div>
-                <h3 className="text-2xl font-semibold mb-6 text-gray-800">Languages</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.languages.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium cursor-pointer transition-colors duration-200 hover:bg-blue-100"
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
+              <BoxReveal boxColor="#3B82F6" duration={0.5} width="100%">
+                <div>
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-800">Languages</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.languages.map((skill) => (
+                      <motion.span
+                        key={skill}
+                        whileHover={{ scale: 1.05 }}
+                        className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium cursor-pointer transition-colors duration-200 hover:bg-blue-100"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              <div>
-                <h3 className="text-2xl font-semibold mb-6 text-gray-800">Frameworks & Databases</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.frameworks.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium cursor-pointer transition-colors duration-200 hover:bg-blue-100"
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
+              </BoxReveal>
 
-              <div>
-                <h3 className="text-2xl font-semibold mb-6 text-gray-800">Tools & Platforms</h3>
-                <div className="flex flex-wrap gap-2">
-                  {skills.tools.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      whileHover={{ scale: 1.05 }}
-                      className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium cursor-pointer transition-colors duration-200 hover:bg-blue-100"
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
+              <BoxReveal boxColor="#3B82F6" duration={0.5} width="100%">
+                <div>
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-800">Frameworks & Databases</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.frameworks.map((skill) => (
+                      <motion.span
+                        key={skill}
+                        whileHover={{ scale: 1.05 }}
+                        className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium cursor-pointer transition-colors duration-200 hover:bg-blue-100"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </BoxReveal>
+
+              <BoxReveal boxColor="#3B82F6" duration={0.5} width="100%">
+                <div>
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-800">Tools & Platforms</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.tools.map((skill) => (
+                      <motion.span
+                        key={skill}
+                        whileHover={{ scale: 1.05 }}
+                        className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium cursor-pointer transition-colors duration-200 hover:bg-blue-100"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </BoxReveal>
             </div>
           </motion.div>
         </div>
@@ -188,6 +228,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

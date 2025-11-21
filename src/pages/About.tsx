@@ -1,12 +1,28 @@
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
+import { TypingAnimation } from '../components/magicui/typing-animation';
+import { GridPattern } from '../components/magicui/grid-pattern';
 
 export default function About() {
   
   // Note: The smooth scroll function was removed as it wasn't being used.
 
   return (
-    // This outer div provides the top/bottom padding for the whole page
-    <div className="min-h-screen pt-20 pb-32">
+    <>
+      <SEO
+        title="About Me - Gavin Zhang"
+        description="Learn more about Gavin Zhang, a passionate Software Engineer focused on delivering value through innovative solutions and clean code."
+        keywords="about, software engineer, background, experience, passion for coding, problem solving"
+      />
+      {/* This outer div provides the top/bottom padding for the whole page */}
+      <div className="min-h-screen pt-20 pb-32 relative">
+        {/* Subtle Grid Pattern Background */}
+        <GridPattern
+          width={40}
+          height={40}
+          className="absolute inset-0 -z-10 opacity-[0.03] [mask-image:linear-gradient(to_bottom,white,transparent)]"
+        />
+
       {/* This container div centers your content and limits its max width */}
       <div className="container mx-auto px-4">
         {/* This motion div is the main wrapper for all your page content */}
@@ -20,9 +36,14 @@ export default function About() {
           {/* --- SECTION 1: ABOUT ME --- */}
           <section className="mb-16">
             <h1 className="text-4xl font-bold mb-6">About Me</h1>
-            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+            <TypingAnimation
+              duration={50}
+              delay={300}
+              startOnView={true}
+              className="text-lg text-gray-700 mb-6 leading-relaxed"
+            >
               Hi, thanks for stopping by. My name is Gavin, and I'm a software engineer. But more than that, I'm someone who is driven to help people.
-            </p>
+            </TypingAnimation>
             <p className="text-lg text-gray-700 leading-relaxed">
               My core passion is to provide value. For me, there is no better feeling than seeing someone's relief after I've helped them with a solution. That moment where a complex problem just *clicks* and you see the positive impact you've made—that's when I'm happiest.
             </p>
@@ -53,14 +74,16 @@ export default function About() {
             
             {/* This grid will place your 2 images side-by-side on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <img 
-                src="/images/dog1.JPG" // <-- REPLACE THIS PATH
-                alt="Description of your photo" 
+              <img
+                src="/images/dog1.JPG"
+                alt="Dog photography"
+                loading="lazy"
                 className="rounded-lg shadow-md w-full h-auto"
               />
-              <img 
-                src="/images/water1.JPG" // <-- REPLACE THIS PATH
-                alt="Description of your photo" 
+              <img
+                src="/images/water1.JPG"
+                alt="Nature photography"
+                loading="lazy"
                 className="rounded-lg shadow-md w-full h-auto"
               />
             </div>
@@ -106,6 +129,7 @@ export default function About() {
 
         </motion.div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

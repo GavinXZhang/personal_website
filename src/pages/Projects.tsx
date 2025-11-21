@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '../data/projects';
+import SEO from '../components/SEO';
+import { MagicCard } from '../components/magicui/magic-card';
+import { TextAnimate } from '../components/magicui/text-animate';
+import { GridPattern } from '../components/magicui/grid-pattern';
 
 const categories = [
   { id: 'all', name: 'All' },
@@ -18,7 +22,20 @@ export default function Projects() {
     : projects.filter(project => project.category === activeCategory);
 
   return (
-    <div className="min-h-screen py-12">
+    <>
+      <SEO
+        title="Projects - Gavin Zhang"
+        description="Explore my portfolio of software engineering projects including automation solutions, healthcare applications, and game development."
+        keywords="projects, portfolio, automation, healthcare tech, web applications, React projects, Python automation"
+      />
+      <div className="min-h-screen py-12 relative">
+        {/* Subtle Grid Pattern Background */}
+        <GridPattern
+          width={40}
+          height={40}
+          className="absolute inset-0 -z-10 opacity-[0.03] [mask-image:linear-gradient(to_bottom,white,transparent)]"
+        />
+
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -26,8 +43,14 @@ export default function Projects() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text">
-            My Projects
+          <h1 className="text-4xl font-bold mb-4">
+            <TextAnimate
+              animation="blurInUp"
+              by="word"
+              className="bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text"
+            >
+              My Projects
+            </TextAnimate>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Here are some of my recent projects that showcase my skills and experience in building innovative solutions.
@@ -63,12 +86,19 @@ export default function Projects() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-1"
               >
+                <MagicCard
+                  gradientSize={250}
+                  gradientFrom="#3B82F6"
+                  gradientTo="#60A5FA"
+                  gradientOpacity={0.15}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-1"
+                >
                 <div className="aspect-video bg-gray-100 overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -136,12 +166,13 @@ export default function Projects() {
                     </div>
                   </div>
                 </div>
+                </MagicCard>
               </motion.div>
             </Link>
           ))}
         </div>
       </div>
-    </div>
-
+      </div>
+    </>
   );
 }

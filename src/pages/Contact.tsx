@@ -1,37 +1,56 @@
 // src/pages/Contact.tsx
 import { motion } from 'framer-motion';
 import { useForm, ValidationError } from '@formspree/react';
+import SEO from '../components/SEO';
 
 export default function Contact() {
   // Use environment variable for Formspree ID (keeps it secure)
   const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
-  
+
+  // ✅ FIXED: Call hook at top level, BEFORE any conditional returns
+  // This follows React's Rules of Hooks - hooks must be called in the same order every render
+  const [state, handleSubmit] = useForm(formspreeId || 'dummy-id');
+
   // Error handling for missing environment variable
+  // Now safe to return early because all hooks have been called
   if (!formspreeId) {
-    console.error('VITE_FORMSPREE_ID environment variable is not set');
+    // Log missing environment variable (only in development)
+    if (import.meta.env.DEV) {
+      console.warn('VITE_FORMSPREE_ID environment variable is not set');
+    }
     return (
-      <div className="min-h-screen flex items-center justify-center pt-20 pb-32">
+      <>
+        <SEO
+          title="Contact - Gavin Zhang"
+          description="Get in touch with Gavin Zhang for software engineering opportunities, collaborations, or coffee chats."
+          keywords="contact, get in touch, software engineer contact, collaboration, hire software engineer"
+        />
+        <div className="min-h-screen flex items-center justify-center pt-20 pb-32">
         <div className="container mx-auto px-4 text-center max-w-2xl">
           <h1 className="text-4xl font-bold mb-6">Contact Form Unavailable</h1>
           <p className="text-xl text-gray-700 mb-8">
             The contact form is temporarily unavailable. Please reach out directly:
           </p>
-          <a 
+          <a
             href="mailto:gwxzhang@bu.edu"
             className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
           >
             Send Email Directly
           </a>
         </div>
-      </div>
+        </div>
+      </>
     );
   }
-  
-  const [state, handleSubmit] = useForm(formspreeId);
 
   if (state.succeeded) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-20 pb-32">
+      <>
+        <SEO
+          title="Thank You - Gavin Zhang"
+          description="Thank you for reaching out! I'll get back to you soon."
+        />
+        <div className="min-h-screen flex items-center justify-center pt-20 pb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,12 +61,19 @@ export default function Contact() {
             I've received your message and will get back to you soon.
           </p>
         </motion.div>
-      </div>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-32">
+    <>
+      <SEO
+        title="Contact - Gavin Zhang"
+        description="Get in touch with Gavin Zhang for software engineering opportunities, collaborations, or coffee chats."
+        keywords="contact, get in touch, software engineer contact, collaboration, hire software engineer"
+      />
+      <div className="min-h-screen pt-20 pb-32">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -133,6 +159,7 @@ export default function Contact() {
           </div>
         </motion.form>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

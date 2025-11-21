@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
@@ -5,8 +6,7 @@ const navigation = [
   { name: 'About', href: '/about' },
   { name: 'Projects', href: '/projects' },
   { name: 'Contact', href: '/contact' },
-  // --- FIX 1: Corrected the path. Assumes 'resume.pdf' is in your /public folder ---
-  { name: 'Resume', href: '/resume.pdf' }, 
+  { name: 'Resume', href: '/resume.pdf' },
 ];
 
 const socialLinks = [
@@ -41,10 +41,11 @@ const socialLinks = [
 
 export default function Navbar() {
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header 
-      style={{ 
+    <header
+      style={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -56,23 +57,24 @@ export default function Navbar() {
         backdropFilter: 'blur(8px)'
       }}
     >
-      <nav style={{ maxWidth: '1680px', margin: '0 auto', padding: '0 1.5rem' }}>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+      <nav style={{ maxWidth: '1680px', margin: '0 auto', padding: '0 1rem' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'space-between',
           height: '56px'
         }}>
           {/* Left: Logo/Name */}
-          <Link 
-            to="/home" 
-            style={{ 
+          <Link
+            to="/home"
+            style={{
               fontSize: '1.125rem',
               fontWeight: '600',
               color: 'var(--color-text-primary)',
               textDecoration: 'none',
               letterSpacing: '-0.02em',
-              transition: 'color 0.3s'
+              transition: 'color 0.3s',
+              zIndex: 51
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = 'var(--color-primary)';
@@ -83,26 +85,26 @@ export default function Navbar() {
           >
             Gavin Zhang
           </Link>
-          
-          {/* --- FIX 2: Added logic to render <a> for PDF and <Link> for pages --- */}
-          <div style={{ 
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            gap: '3rem'
-          }}>
+
+          {/* Desktop Navigation - Hidden on Mobile */}
+          <div
+            className="hidden md:flex"
+            style={{
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              gap: '2rem'
+            }}
+          >
             {navigation.map((item) => {
-              // Check if the link is external (a PDF or another website)
               const isExternal = item.href.endsWith('.pdf') || item.href.startsWith('http');
 
               if (isExternal) {
-                // Render a standard <a> tag for the PDF/external link
                 return (
                   <a
                     key={item.name}
                     href={item.href}
-                    target="_blank" // Opens in a new tab
+                    target="_blank"
                     rel="noopener noreferrer"
                     style={{
                       color: 'var(--color-text-primary)',
@@ -126,7 +128,6 @@ export default function Navbar() {
                 );
               }
 
-              // Render a React Router <Link> for all internal pages
               return (
                 <Link
                   key={item.name}
@@ -155,38 +156,184 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Right: Social Links */}
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            {socialLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={link.name}
-                style={{
-                  color: 'var(--color-text-secondary)',
-                  transition: 'all 0.3s',
-                  padding: '0.5rem',
-                  borderRadius: 'var(--radius-md)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = 'var(--color-primary)';
-                  e.currentTarget.style.background = 'var(--color-bg-secondary)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'var(--color-text-secondary)';
-                  e.currentTarget.style.background = 'transparent';
-                }}
-              >
-                {link.icon}
-              </a>
-            ))}
+          {/* Right: Social Links - Hidden on Mobile, Hamburger Menu on Mobile */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            {/* Desktop Social Links */}
+            <div className="hidden md:flex" style={{ gap: '1rem', alignItems: 'center' }}>
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.name}
+                  style={{
+                    color: 'var(--color-text-secondary)',
+                    transition: 'all 0.3s',
+                    padding: '0.5rem',
+                    borderRadius: 'var(--radius-md)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--color-primary)';
+                    e.currentTarget.style.background = 'var(--color-bg-secondary)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'var(--color-text-secondary)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+
+            {/* Mobile Hamburger Menu Button */}
+            <button
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+              style={{
+                padding: '0.5rem',
+                color: 'var(--color-text-primary)',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                zIndex: 51
+              }}
+            >
+              {mobileMenuOpen ? (
+                // Close icon
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                // Hamburger icon
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu - Slide Down */}
+        {mobileMenuOpen && (
+          <div
+            className="md:hidden"
+            style={{
+              position: 'absolute',
+              top: '56px',
+              left: 0,
+              right: 0,
+              background: 'var(--color-bg-primary)',
+              borderBottom: 'var(--card-border)',
+              boxShadow: 'var(--shadow-lg)',
+              padding: '1rem',
+              animation: 'slideDown 0.3s ease-out'
+            }}
+          >
+            {/* Mobile Navigation Links */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
+              {navigation.map((item) => {
+                const isExternal = item.href.endsWith('.pdf') || item.href.startsWith('http');
+
+                if (isExternal) {
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMobileMenuOpen(false)}
+                      style={{
+                        color: 'var(--color-text-primary)',
+                        fontWeight: '500',
+                        fontSize: '1rem',
+                        padding: '0.75rem 1rem',
+                        borderRadius: 'var(--radius-md)',
+                        background: 'transparent',
+                        textDecoration: 'none',
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'var(--color-bg-secondary)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{
+                      color: 'var(--color-text-primary)',
+                      fontWeight: '500',
+                      fontSize: '1rem',
+                      padding: '0.75rem 1rem',
+                      borderRadius: 'var(--radius-md)',
+                      background: location.pathname === item.href ? 'var(--color-bg-tertiary)' : 'transparent',
+                      textDecoration: 'none',
+                      transition: 'background 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'var(--color-bg-secondary)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = location.pathname === item.href ? 'var(--color-bg-tertiary)' : 'transparent';
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Mobile Social Links */}
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              padding: '1rem 0',
+              borderTop: '1px solid var(--color-border)'
+            }}>
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.name}
+                  style={{
+                    color: 'var(--color-text-secondary)',
+                    transition: 'color 0.3s',
+                    padding: '0.5rem',
+                    borderRadius: 'var(--radius-md)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--color-primary)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'var(--color-text-secondary)';
+                  }}
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );

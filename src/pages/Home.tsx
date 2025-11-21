@@ -30,7 +30,7 @@ export default function Home() {
       {/* --- REMOVED: Doodled Arrow and Resume Callout --- */}
       
       {/* --- HERO SECTION --- */}
-      <section className="relative z-10 pt-20 pb-32">
+      <section className="relative z-10 pt-20 pb-16 md:pb-32">
         {/* MagicUI Animated Grid Background */}
         <AnimatedGridPattern
           numSquares={30}
@@ -44,13 +44,13 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16 text-center md:text-left"
+          className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 text-center md:text-left"
         >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="w-80 h-[30rem] mb-8 md:mb-0 rounded-3xl overflow-hidden border-4 border-white shadow-xl flex-shrink-0"
+            className="w-64 h-80 md:w-80 md:h-[30rem] mb-4 md:mb-0 rounded-3xl overflow-hidden border-4 border-white shadow-xl flex-shrink-0"
           >
             <img
               src="/images/Profile.JPG"
@@ -61,12 +61,12 @@ export default function Home() {
           </motion.div>
           <div className="flex flex-col items-center md:items-start md:max-w-3xl">
             <BlurFade delay={0.25} inView>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text">
                 Hi, I'm Gavin!
               </h1>
             </BlurFade>
             <BlurFade delay={0.5} inView>
-              <p className="text-xl md:text-2xl text-gray-700 mb-0 leading-relaxed">
+              <p className="text-lg md:text-xl lg:text-2xl text-gray-700 mb-0 leading-relaxed px-4 md:px-0">
                 A passionate Software Engineer specializing in building exceptional digital experiences
                 with modern technologies.
               </p>
@@ -76,10 +76,10 @@ export default function Home() {
       </section>
 
       {/* --- HIGHLIGHTED WORKS --- */}
-      <section id="highlighted-works" className="py-20 relative z-10">
+      <section id="highlighted-works" className="py-12 md:py-20 relative z-10">
         <div className="max-w-screen-2xl mx-auto px-4">
-          <h2 className="text-4xl font-extrabold text-center mb-16 text-gray-800">Highlighted Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 md:mb-16 text-gray-800">Highlighted Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {highlightedProjects.map((project) => (
               <Link
                 to={`/project/${project.slug}`}
@@ -99,14 +99,14 @@ export default function Home() {
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                    <h3 className="text-4xl font-extrabold mb-2 text-white group-hover:text-blue-200 transition-colors duration-300 drop-shadow-md">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white">
+                    <h3 className="text-2xl md:text-4xl font-extrabold mb-2 text-white group-hover:text-blue-200 transition-colors duration-300 drop-shadow-md">
                       {project.title}
                     </h3>
-                    <p className="text-xl text-white mb-4 drop-shadow-md">
+                    <p className="text-base md:text-xl text-white mb-2 md:mb-4 drop-shadow-md">
                       {project.accomplishment}
                     </p>
-                    <p className="text-sm text-gray-300 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="hidden md:block text-sm text-gray-300 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       Click to view full project details
                     </p>
                     <div className="flex gap-2">
@@ -136,18 +136,18 @@ export default function Home() {
       </section>
 
       {/* --- SKILLS SECTION --- */}
-      <section id="skills" className="py-20 relative z-10">
+      <section id="skills" className="py-12 md:py-20 relative z-10">
         <div className="max-w-screen-2xl mx-auto px-4">
-          <h2 className="text-4xl font-extrabold text-center mb-16 text-gray-800">My Tech Stack</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 md:mb-16 text-gray-800">My Tech Stack</h2>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
-            className="p-8 bg-white rounded-xl shadow-md transition-all duration-300 hover:border-blue-500 border-2 border-transparent"
+            className="p-4 md:p-8 bg-white rounded-xl shadow-md transition-all duration-300 hover:border-blue-500 border-2 border-transparent"
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               <BoxReveal boxColor="#3B82F6" duration={0.5} width="100%">
                 <div>
                   <h3 className="text-2xl font-semibold mb-6 text-gray-800">Languages</h3>
@@ -204,7 +204,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 relative z-10">
+      <section className="py-12 md:py-20 relative z-10">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -212,8 +212,8 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold mb-6">Let's Build Something Amazing</h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Let's Build Something Amazing</h2>
+            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 px-4 md:px-0">
               I'm always interested in hearing about new projects and opportunities.
             </p>
             <Link
